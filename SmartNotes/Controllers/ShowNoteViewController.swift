@@ -26,6 +26,9 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let font = UIFont(name: "Futura", size: 17.0)
+        noteTextView.typingAttributes = [.font: font!,
+                                         .foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
         self.navigationItem.largeTitleDisplayMode = .never
         mapView.isHidden = true
         if let note = note {
@@ -35,6 +38,8 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
             if note.locationLatitude != 0.0 && note.locationLongitude != 0.0 {
                 location = CLLocationCoordinate2D(latitude: note.locationLatitude, longitude: note.locationLongitude)
                 pinMapView()
+            } else {
+                location = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
             }
         } else {
             noteTextView.text = ""
@@ -110,7 +115,6 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
             text != savedStateOfNote ||
             savedStateOFLocation?.longitude != location?.longitude &&
             savedStateOFLocation?.latitude != location?.latitude {
-
             var new: Note?
             
             if let note = note {
@@ -124,8 +128,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
                 new?.locationLatitude = location.latitude
             }
             new?.details = text
-            new?.date = NSDate() as Date
-
+            new?.date = Date()
             ad.saveContext()
         }
     }
@@ -156,8 +159,19 @@ extension ShowNoteViewController: MapViewControllerDelegate {
 extension ShowNoteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.originalImage] as! UIImage
-        append(image: image)
-        dismiss(animated:true, completion: nil)
+        if let image = info[.originalImage] as? UIImage {
+            append(image: image)
+            dismiss(animated:true, completion: nil)
+        }
+
+//        if (imagePicker.sourceType == UIImagePickerControllerSourceType.camera) {
+//            let data = UIImagePNGRepresentation(pickedImage)
+//            UIImageWriteToSavedPhotosAlbum(pickedImage, nil, nil, nil)
+//
+//            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//                let imageURL =  info[UIImagePickerControllerReferenceURL] as? NSURL
+//                print(imageURL)
+//            }
+//        }
     }
 }
