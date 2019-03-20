@@ -18,7 +18,8 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
     
     private var locationManager = CLLocationManager()
 
-    private var savedStateOfNote: NSAttributedString?
+    private var savedStateOfTextView = ""
+    private var savedStateOfNote = ""
     private var savedStateOFLocation: CLLocationCoordinate2D?
     private var location: CLLocationCoordinate2D?
 
@@ -27,13 +28,11 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
     override func viewDidLoad() {
         super.viewDidLoad()
         let font = UIFont(name: "Futura", size: 17.0)
-        noteTextView.typingAttributes = [.font: font!,
-                                         .foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
         self.navigationItem.largeTitleDisplayMode = .never
         mapView.isHidden = true
         if let note = note {
-            noteTextView.attributedText = note.details as? NSAttributedString
-            savedStateOfNote = note.details as? NSAttributedString
+            noteTextView.attributedText = note.details?.replaceImgTagsWithImages()
+            savedStateOfNote = note.details ?? ""
             savedStateOFLocation = CLLocationCoordinate2D(latitude: note.locationLatitude, longitude: note.locationLongitude)
             if note.locationLatitude != 0.0 && note.locationLongitude != 0.0 {
                 location = CLLocationCoordinate2D(latitude: note.locationLatitude, longitude: note.locationLongitude)
@@ -43,8 +42,9 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
             }
         } else {
             noteTextView.text = ""
-            savedStateOfNote = NSAttributedString(string: "")
         }
+        noteTextView.typingAttributes = [.font: font!,
+                                         .foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
 
     }
 
@@ -93,6 +93,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
+    
     private func pinMapView() {
         if let location = location {
             mapView.isHidden = false
@@ -110,9 +111,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
 
     private func saveNote() {
         if let text = noteTextView.attributedText,
-            !text.string.isEmpty,
-            let savedStateOfNote = savedStateOfNote,
-            text != savedStateOfNote ||
+            text.string != savedStateOfNote ||
             savedStateOFLocation?.longitude != location?.longitude &&
             savedStateOFLocation?.latitude != location?.latitude {
             var new: Note?
@@ -121,13 +120,15 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
                 new = note
             } else {
                 new = Note(context: context)
+                new?.id = UUID().uuidString
                 note = new
             }
             if let location = location {
                 new?.locationLongitude = location.longitude
                 new?.locationLatitude = location.latitude
             }
-            new?.details = text
+
+            new?.details = text.replaceImagesWithTags(for: (new?.id)!)
             new?.date = Date()
             ad.saveContext()
         }
@@ -137,8 +138,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
         let fullString = NSMutableAttributedString(attributedString: noteTextView.attributedText)
         let image1Attachment = NSTextAttachment()
         let oldWidth = image.size.width
-        let scaleFactor = oldWidth / (view.frame.size.width - 10)
-        image1Attachment.image = UIImage(cgImage: image.cgImage!, scale: scaleFactor, orientation: .up)
+        image1Attachment.image = image.resizeImage(scale: (UIScreen.main.bounds.width - 10)/oldWidth)
         let image1String = NSAttributedString(attachment: image1Attachment)
         fullString.append(image1String)
         noteTextView.attributedText = fullString
@@ -163,15 +163,7 @@ extension ShowNoteViewController: UIImagePickerControllerDelegate, UINavigationC
             append(image: image)
             dismiss(animated:true, completion: nil)
         }
-
-//        if (imagePicker.sourceType == UIImagePickerControllerSourceType.camera) {
-//            let data = UIImagePNGRepresentation(pickedImage)
-//            UIImageWriteToSavedPhotosAlbum(pickedImage, nil, nil, nil)
-//
-//            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//                let imageURL =  info[UIImagePickerControllerReferenceURL] as? NSURL
-//                print(imageURL)
-//            }
-//        }
     }
 }
+
+

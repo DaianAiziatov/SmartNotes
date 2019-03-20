@@ -14,6 +14,8 @@ protocol MapViewControllerDelegate {
     func saveCoordinates(coordinates: CLLocationCoordinate2D)
 }
 
+// TODO: Stop updating user location when leave the screen or aplication
+
 class MapViewController: UIViewController, AlertDisplayable {
 
     var delegate: MapViewControllerDelegate?
@@ -31,13 +33,29 @@ class MapViewController: UIViewController, AlertDisplayable {
         }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        mapView.delegate = self
+        annotation.coordinate = mapView.centerCoordinate
+        if let location = location {
+            annotation.coordinate = location
+            let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
+            mapView.setRegion(region, animated: true)
+        }
+        mapView.addAnnotation(annotation)
+        self.navigationItem.largeTitleDisplayMode = .never
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveLocation))
+        let openInAppleMaps = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(openAppleMapsTapped))
+        self.navigationItem.rightBarButtonItems = [saveButton, openInAppleMaps]
+    }
+
     @IBAction func changeMapType(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 1: mapView.mapType = .satellite
         default: mapView.mapType = .standard
         }
     }
-    
+
     @IBAction func currentLocationTapped(_ sender: UIButton) {
         mapView.showsUserLocation = true
         if CLLocationManager.locationServicesEnabled() == true {
@@ -54,21 +72,6 @@ class MapViewController: UIViewController, AlertDisplayable {
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        mapView.delegate = self
-        annotation.coordinate = mapView.centerCoordinate
-        if let location = location {
-            annotation.coordinate = location
-            let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
-            mapView.setRegion(region, animated: true)
-        }
-        mapView.addAnnotation(annotation)
-        self.navigationItem.largeTitleDisplayMode = .never
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveLocation))
-    }
-
-    
 
     @objc
     private func saveLocation() {
@@ -76,6 +79,33 @@ class MapViewController: UIViewController, AlertDisplayable {
             delegate?.saveCoordinates(coordinates: location)
             self.navigationController?.popViewController(animated: true)
         }
+    }
+
+    @objc
+    private func openAppleMapsTapped() {
+        let openAppleMap = UIAlertAction(title: "Open in Apple Maps", style: .default, handler: openAppleMaps(action:))
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        displayAlert(with: nil, message: nil, actions: [openAppleMap, cancel], style: .actionSheet)
+    }
+
+    private func openAppleMaps(action: UIAlertAction) -> Void {
+        guard let location = location else {
+            displayAlert(with: "Oops!:(", message: "No location saved")
+            return
+        }
+        let latitude: CLLocationDegrees = location.latitude
+        let longitude: CLLocationDegrees = location.longitude
+
+        let regionDistance:CLLocationDistance = 10000
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.openInMaps(launchOptions: options)
     }
 
 }
