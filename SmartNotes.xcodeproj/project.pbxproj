@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2B3AB614223DBF6A00C3E430 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB613223DBF6A00C3E430 /* UIImage.swift */; };
 		2B3AB616223DC27C00C3E430 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB615223DC27C00C3E430 /* String.swift */; };
+		2B3AB636224053FF00C3E430 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB635224053FF00C3E430 /* NSAttributedString.swift */; };
+		2B3AB6562242D7CD00C3E430 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6552242D7CD00C3E430 /* Styles.swift */; };
+		2B3AB6582242DEF800C3E430 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6572242DEF800C3E430 /* DataManager.swift */; };
 		2B955FC8223AB55C008BCB22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FC7223AB55C008BCB22 /* AppDelegate.swift */; };
 		2B955FCD223AB55C008BCB22 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B955FCB223AB55C008BCB22 /* Main.storyboard */; };
 		2B955FD0223AB55C008BCB22 /* SmartNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FCE223AB55C008BCB22 /* SmartNotes.xcdatamodeld */; };
@@ -25,6 +28,9 @@
 /* Begin PBXFileReference section */
 		2B3AB613223DBF6A00C3E430 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		2B3AB615223DC27C00C3E430 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		2B3AB635224053FF00C3E430 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
+		2B3AB6552242D7CD00C3E430 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		2B3AB6572242DEF800C3E430 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		2B955FC4223AB55C008BCB22 /* SmartNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B955FC7223AB55C008BCB22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B955FCC223AB55C008BCB22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -77,7 +83,10 @@
 				2B955FEC223B06B1008BCB22 /* Controllers */,
 				2B955FEB223B069D008BCB22 /* Views */,
 				2B3AB613223DBF6A00C3E430 /* UIImage.swift */,
+				2B3AB635224053FF00C3E430 /* NSAttributedString.swift */,
 				2B3AB615223DC27C00C3E430 /* String.swift */,
+				2B3AB6552242D7CD00C3E430 /* Styles.swift */,
+				2B3AB6572242DEF800C3E430 /* DataManager.swift */,
 			);
 			path = SmartNotes;
 			sourceTree = "<group>";
@@ -222,6 +231,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B3AB6562242D7CD00C3E430 /* Styles.swift in Sources */,
+				2B3AB6582242DEF800C3E430 /* DataManager.swift in Sources */,
 				2B955FD0223AB55C008BCB22 /* SmartNotes.xcdatamodeld in Sources */,
 				2B3AB614223DBF6A00C3E430 /* UIImage.swift in Sources */,
 				2B955FE2223AC3D7008BCB22 /* NotesViewController.swift in Sources */,
@@ -229,6 +240,7 @@
 				2B955FE8223AE24D008BCB22 /* AlertDisplayable.swift in Sources */,
 				2B955FC8223AB55C008BCB22 /* AppDelegate.swift in Sources */,
 				2B955FE4223AC988008BCB22 /* NoteTableViewCell.swift in Sources */,
+				2B3AB636224053FF00C3E430 /* NSAttributedString.swift in Sources */,
 				2B955FE6223AD7DA008BCB22 /* ShowNoteViewController.swift in Sources */,
 				2B955FEA223AFF9C008BCB22 /* MapViewController.swift in Sources */,
 			);
