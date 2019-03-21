@@ -10,9 +10,10 @@ import Foundation
 
 class DataManager {
 
+    private static let fileManager = FileManager.default
+    static let localDoumentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+
     static func deleteFolderForNote(with noteID: String) {
-        let fileManager = FileManager.default
-        let localDoumentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let noteDirectoryURL = localDoumentsDirectoryURL.appendingPathComponent(noteID)
         do {
             try fileManager.removeItem(at: noteDirectoryURL)
@@ -21,8 +22,6 @@ class DataManager {
         }
     }
     static func clearFolderForNote(with noteID: String) {
-        let fileManager = FileManager.default
-        let localDoumentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let noteDirectoryURL = localDoumentsDirectoryURL.appendingPathComponent(noteID)
         do {
             let directoryContents = try fileManager.contentsOfDirectory(atPath: noteDirectoryURL.path)

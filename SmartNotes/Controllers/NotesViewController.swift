@@ -39,6 +39,13 @@ class NotesViewController: UIViewController, AlertDisplayable {
         self.navigationItem.hidesSearchBarWhenScrolling = true
     }
 
+    @IBAction func profileTapped(_ sender: UIBarButtonItem) {
+        if let _ = FirebaseManager.shared.getUser() {
+            self.performSegue(withIdentifier: "showProfile", sender: self)
+        } else {
+            self.performSegue(withIdentifier: "showLogin", sender: self)
+        }
+    }
     // Load the notes from Core Data
     func loadNotes() {
         let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
