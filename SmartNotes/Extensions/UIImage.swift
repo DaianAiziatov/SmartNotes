@@ -8,6 +8,8 @@
 
 import UIKit
 
+var imagesCache = NSCache<NSString, UIImage>()
+
 extension UIImage {
     
     func save(with name: String) -> String? {
@@ -50,5 +52,26 @@ extension UIImage {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage!
+    }
+
+    static func load(from url: URL, completion: @escaping (Result<UIImage, NSError>) -> ()) {
+        if let cachedImage = imagesCache.object(forKey: url.absoluteString as NSString) {
+            completion(Result.success(cachedImage))
+            return
+        }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(Result.failure(error as NSError))
+                return
+            }
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data,
+                let image = UIImage(data: data)
+                else { return }
+            completion(Result.success(image))
+            imagesCache.setObject(image, forKey: url.absoluteString as NSString)
+        }.resume()
     }
 }

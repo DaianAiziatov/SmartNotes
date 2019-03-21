@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class NotesViewController: UIViewController, AlertDisplayable {
+class NotesViewController: UIViewController, AlertDisplayable, LoadingDisplayable {
 
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var notesCounterItem: UIBarButtonItem!
@@ -20,6 +20,10 @@ class NotesViewController: UIViewController, AlertDisplayable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadNotes()
+        if let _ = FirebaseManager.shared.getUser() {
+            let syncButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+            navigationItem.rightBarButtonItem = syncButton
+        }
     }
 
     override func viewDidLoad() {
@@ -37,6 +41,8 @@ class NotesViewController: UIViewController, AlertDisplayable {
         definesPresentationContext = true
         self.navigationItem.searchController = self.searchController
         self.navigationItem.hidesSearchBarWhenScrolling = true
+
+
     }
 
     @IBAction func profileTapped(_ sender: UIBarButtonItem) {
@@ -48,15 +54,11 @@ class NotesViewController: UIViewController, AlertDisplayable {
     }
     // Load the notes from Core Data
     func loadNotes() {
-        let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
-        do {
-            notes = try context.fetch(fetchRequest)
-            notes.sort(by: {$0.date! > $1.date!})
+        if let notes = DataManager.loadNotes() {
+            self.notes = notes
             notesCounterItem.title = notes.count == 1 ? "1 Note" : "\(notes.count) Notes"
             self.tableView.separatorStyle = notes.isEmpty ? .none : .singleLine
             self.tableView.reloadData()
-        } catch (let error) {
-            print("[NotesViewController] \(#function): Cannot fetch from database. Error: \(error.localizedDescription)")
         }
     }
 
@@ -84,6 +86,30 @@ class NotesViewController: UIViewController, AlertDisplayable {
         let descByDate = UIAlertAction(title: "Order DESC by date", style: .default, handler: orderDESCbyDate(action:))
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         displayAlert(with: nil, message: nil, actions: [ascByTitle, descByTitle, ascByDate, descByDate, cancel], style: .actionSheet)
+    }
+
+    @objc
+    private func refresh() {
+        //self.startLoading()
+        let count = Atomic<Int>(0)
+        for note in notes {
+            FirebaseManager.shared.save(note: note) { error in
+                if let error = error {
+                    print("[\(#function)] Error: \(error.localizedDescription)")
+                } else {
+                    FirebaseManager.shared.saveAttachments(for: note) { errors in
+                        if errors.count > 0 {
+                            for error in errors {
+                                print("[\(#function)] Error: \(error.localizedDescription)")
+                            }
+                        } else {
+                            print("[\(#function)] Success")
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     private func orderASCbyTitle(action: UIAlertAction) -> Void {

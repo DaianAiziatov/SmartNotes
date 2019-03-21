@@ -7,11 +7,24 @@
 //
 
 import Foundation
+import CoreData
 
 class DataManager {
 
     private static let fileManager = FileManager.default
     static let localDoumentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+
+    static func loadNotes() -> [Note]? {
+        let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
+        do {
+            var notes = try context.fetch(fetchRequest)
+            notes.sort(by: {$0.date! > $1.date!})
+            return notes
+        } catch (let error) {
+            print("[DataManager.\(#function)]: Cannot fetch from database. Error: \(error.localizedDescription)")
+            return nil
+        }
+    }
 
     static func deleteFolderForNote(with noteID: String) {
         let noteDirectoryURL = localDoumentsDirectoryURL.appendingPathComponent(noteID)

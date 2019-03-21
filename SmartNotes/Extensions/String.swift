@@ -71,6 +71,25 @@ extension String {
         return attributedString
     }
 
+    func getLocalURLsOfAttachments() -> [URL] {
+        do {
+            let regex = try NSRegularExpression(pattern: "<img>(.*?)</img>", options: [])
+            let matches = regex.matches(in: self,
+                                        options: [],
+                                        range: NSRange(location: 0, length: self.utf16.count))
+            return matches.compactMap({ match in
+                if let rangeForURL = Range(match.range(at: 1), in: self) {
+                    let imageLocalURL = String(self[rangeForURL])
+                    return URL(string: imageLocalURL)
+                }
+                return nil
+            })
+        } catch(let error) {
+            print(error.localizedDescription)
+            return [URL]()
+        }
+    }
+
     var inImgTag: String {
         return "<img>\(self)</img>"
     }
