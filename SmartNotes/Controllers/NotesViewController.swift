@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class NotesViewController: UIViewController, AlertDisplayable {
+class NotesViewController: UIViewController, AlertDisplayable, LoadingDisplayable {
 
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var notesCounterItem: UIBarButtonItem!
@@ -20,6 +20,12 @@ class NotesViewController: UIViewController, AlertDisplayable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadNotes()
+        if let _ = FirebaseManager.shared.getUser() {
+            let syncButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+            navigationItem.rightBarButtonItem = syncButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
     }
 
     override func viewDidLoad() {
@@ -37,19 +43,24 @@ class NotesViewController: UIViewController, AlertDisplayable {
         definesPresentationContext = true
         self.navigationItem.searchController = self.searchController
         self.navigationItem.hidesSearchBarWhenScrolling = true
+
+
     }
 
+    @IBAction func profileTapped(_ sender: UIBarButtonItem) {
+        if let _ = FirebaseManager.shared.getUser() {
+            self.performSegue(withIdentifier: "showProfile", sender: self)
+        } else {
+            self.performSegue(withIdentifier: "showLogin", sender: self)
+        }
+    }
     // Load the notes from Core Data
     func loadNotes() {
-        let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
-        do {
-            notes = try context.fetch(fetchRequest)
-            notes.sort(by: {$0.date! > $1.date!})
+        if let notes = DataManager.loadNotes() {
+            self.notes = notes
             notesCounterItem.title = notes.count == 1 ? "1 Note" : "\(notes.count) Notes"
             self.tableView.separatorStyle = notes.isEmpty ? .none : .singleLine
             self.tableView.reloadData()
-        } catch (let error) {
-            print("[NotesViewController] \(#function): Cannot fetch from database. Error: \(error.localizedDescription)")
         }
     }
 
@@ -79,6 +90,24 @@ class NotesViewController: UIViewController, AlertDisplayable {
         displayAlert(with: nil, message: nil, actions: [ascByTitle, descByTitle, ascByDate, descByDate, cancel], style: .actionSheet)
     }
 
+    @objc
+    private func refresh() {
+        self.startLoading()
+        SyncManager.sync { error in
+            if let error = error {
+                print("[\(#function)] Error: \(error.localizedDescription)")
+                self.stopLoading {
+                    self.displayAlert(with: "Error", message: "Some error occured while refreshing. Try again later.")
+                }
+            } else {
+                self.stopLoading {
+                    self.loadNotes()
+                }
+            }
+        }
+
+    }
+
     private func orderASCbyTitle(action: UIAlertAction) -> Void {
         notes.sort(by: { $0.details! < $1.details! })
         tableView.reloadData()
@@ -103,7 +132,9 @@ class NotesViewController: UIViewController, AlertDisplayable {
 
 // MARK: - UITableView Delegate
 extension NotesViewController: UITableViewDelegate {
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("SELECTED NOTE WITH ID: \(notes[indexPath.row].id!)")
+    }
 }
 
 // MARK: - UITableView Data Source
@@ -129,8 +160,22 @@ extension NotesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let confirm = UIAlertAction(title: "Confirm", style: .default, handler: ({ action in
-                context.delete(self.notes[indexPath.row])
-                DataManager.deleteFolderForNote(with: self.notes[indexPath.row].id!)
+                let note = self.notes[indexPath.row]
+                if let _ = FirebaseManager.shared.getUser() {
+                    FirebaseManager.shared.deleteNote(with: note.id!) { error in
+                        if let error = error {
+                            print("[\(#function)] Error while deleting note from cloud: \(error.localizedDescription)")
+                        } else {
+                            FirebaseManager.shared.deleteAttachments(for: note) { error in
+                                if let error = error {
+                                    print("[\(#function)] Error while deleting attachments for note from cloud: \(error.localizedDescription)")
+                                }
+                            }
+                        }
+                    }
+                }
+                context.delete(note)
+                DataManager.deleteFolderForNote(with: note.id!)
                 self.loadNotes()
             }))
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

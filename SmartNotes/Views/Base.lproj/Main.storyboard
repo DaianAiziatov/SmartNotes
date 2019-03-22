@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,9 +21,9 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iSc-yl-02A">
                                 <rect key="frame" x="0.0" y="116" width="375" height="551"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="noteCell" textLabel="U9Q-Ad-nyF" detailTextLabel="Rty-qe-Mlo" style="IBUITableViewCellStyleSubtitle" id="hwX-oA-ct0" customClass="NoteTableViewCell" customModule="SmartNotes" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -85,15 +86,23 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="YYV-Sg-BkG"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Notes" id="MNM-KZ-fbV"/>
+                    <navigationItem key="navigationItem" title="Notes" id="MNM-KZ-fbV">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="profile_icon" id="tpI-CB-fy4">
+                            <connections>
+                                <action selector="profileTapped:" destination="vZN-fA-FVf" id="4cA-Cg-7Lx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="notesCounterItem" destination="Yyh-lY-qZh" id="Qsx-tf-v4r"/>
                         <outlet property="tableView" destination="iSc-yl-02A" id="dmD-Pw-SFo"/>
+                        <segue destination="YHo-5m-akB" kind="presentation" identifier="showLogin" id="H7g-kq-QX2"/>
+                        <segue destination="fFH-iv-idF" kind="presentation" identifier="showProfile" id="XJ7-RU-n1d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fZR-b6-3ud" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1719.2" y="111.99400299850076"/>
+            <point key="canvasLocation" x="1700" y="112"/>
         </scene>
         <!--Show Note View Controller-->
         <scene sceneID="BWS-at-cNl">
@@ -263,14 +272,396 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Dr-hV-o2m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="780" y="111.99400299850076"/>
+            <point key="canvasLocation" x="854" y="112"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="SoA-SH-ngc">
+            <objects>
+                <viewController id="Xpy-od-3vM" customClass="LoginViewController" customModule="SmartNotes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8qP-BE-HUP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6D3-CP-eHd">
+                                <rect key="frame" x="16" y="273.5" width="343" height="68"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p4m-3d-F6C">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardAppearance="alert" textContentType="email"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8GA-1i-RMf">
+                                        <rect key="frame" x="0.0" y="38" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardAppearance="alert" secureTextEntry="YES" textContentType="password"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7U-CQ-lEG">
+                                <rect key="frame" x="163" y="223.5" width="49" height="42"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="35"/>
+                                <color key="textColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OfW-7b-iAR">
+                                <rect key="frame" x="16" y="349.5" width="343" height="32"/>
+                                <color key="backgroundColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Login"/>
+                                <connections>
+                                    <action selector="loginTapped:" destination="Xpy-od-3vM" eventType="touchUpInside" id="TmT-rd-1DW"/>
+                                    <segue destination="lVs-ki-FFb" kind="show" identifier="showProfile" id="tbd-dp-CeF"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ggg-a2-vW4">
+                                <rect key="frame" x="65.5" y="389.5" width="244.5" height="32"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dont have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UML-YQ-20q">
+                                        <rect key="frame" x="0.0" y="0.0" width="176.5" height="32"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUP-pA-sYe">
+                                        <rect key="frame" x="176.5" y="0.0" width="68" height="32"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="tintColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Register!"/>
+                                        <connections>
+                                            <segue destination="gi1-Gz-eHD" kind="show" id="ibE-RC-8qm"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Rd1-MB-v3x" firstAttribute="trailing" secondItem="6D3-CP-eHd" secondAttribute="trailing" constant="16" id="42Z-p6-Nmf"/>
+                            <constraint firstItem="OfW-7b-iAR" firstAttribute="leading" secondItem="Rd1-MB-v3x" secondAttribute="leading" constant="16" id="77l-pq-lLG"/>
+                            <constraint firstItem="Ggg-a2-vW4" firstAttribute="top" secondItem="OfW-7b-iAR" secondAttribute="bottom" constant="8" symbolic="YES" id="Uyt-6R-Ibi"/>
+                            <constraint firstItem="OfW-7b-iAR" firstAttribute="centerY" secondItem="Rd1-MB-v3x" secondAttribute="centerY" id="bds-j4-QOi"/>
+                            <constraint firstItem="OfW-7b-iAR" firstAttribute="top" secondItem="6D3-CP-eHd" secondAttribute="bottom" constant="8" symbolic="YES" id="cne-7w-d7U"/>
+                            <constraint firstItem="6D3-CP-eHd" firstAttribute="leading" secondItem="Rd1-MB-v3x" secondAttribute="leading" constant="16" id="dsQ-aE-Zp6"/>
+                            <constraint firstItem="m7U-CQ-lEG" firstAttribute="centerX" secondItem="Rd1-MB-v3x" secondAttribute="centerX" id="hdK-uV-OyC"/>
+                            <constraint firstItem="Rd1-MB-v3x" firstAttribute="trailing" secondItem="OfW-7b-iAR" secondAttribute="trailing" constant="16" id="iP8-JJ-Rff"/>
+                            <constraint firstItem="6D3-CP-eHd" firstAttribute="top" secondItem="m7U-CQ-lEG" secondAttribute="bottom" constant="8" id="seW-rp-2m0"/>
+                            <constraint firstItem="Ggg-a2-vW4" firstAttribute="centerX" secondItem="Rd1-MB-v3x" secondAttribute="centerX" id="x0b-ji-QFz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Rd1-MB-v3x"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="m8L-e8-4xQ">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="I4v-yW-JMV">
+                            <connections>
+                                <action selector="cancelTapped:" destination="Xpy-od-3vM" id="Cys-Fs-9S0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="emailTextField" destination="p4m-3d-F6C" id="tmO-og-5CG"/>
+                        <outlet property="loginButton" destination="OfW-7b-iAR" id="ky2-4y-yfu"/>
+                        <outlet property="passwordTextField" destination="8GA-1i-RMf" id="HBP-ch-hjQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jDc-QH-50E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3386" y="-681"/>
+        </scene>
+        <!--Register View Controller-->
+        <scene sceneID="ur9-aq-Vnn">
+            <objects>
+                <viewController id="gi1-Gz-eHD" customClass="RegisterViewController" customModule="SmartNotes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="keC-BV-81E">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rA9-KV-FIg">
+                                <rect key="frame" x="16" y="235.5" width="343" height="106"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HZe-kh-9rh">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardAppearance="alert" textContentType="email"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CD2-gr-cD2">
+                                        <rect key="frame" x="0.0" y="38" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardAppearance="alert" secureTextEntry="YES" textContentType="password"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1UA-qq-F6c">
+                                        <rect key="frame" x="0.0" y="76" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardAppearance="alert" secureTextEntry="YES" textContentType="password"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XhC-Ka-f3Q">
+                                <rect key="frame" x="16" y="349.5" width="343" height="32"/>
+                                <color key="backgroundColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Register"/>
+                                <connections>
+                                    <action selector="registerTapped:" destination="gi1-Gz-eHD" eventType="touchUpInside" id="sM8-X9-Siq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ot4-1Z-a1J" firstAttribute="trailing" secondItem="rA9-KV-FIg" secondAttribute="trailing" constant="16" id="E22-b6-YA2"/>
+                            <constraint firstItem="ot4-1Z-a1J" firstAttribute="trailing" secondItem="XhC-Ka-f3Q" secondAttribute="trailing" constant="16" id="MKj-zN-RKM"/>
+                            <constraint firstItem="XhC-Ka-f3Q" firstAttribute="leading" secondItem="ot4-1Z-a1J" secondAttribute="leading" constant="16" id="MLr-Qu-OHm"/>
+                            <constraint firstItem="rA9-KV-FIg" firstAttribute="leading" secondItem="ot4-1Z-a1J" secondAttribute="leading" constant="16" id="MzM-AP-Xfy"/>
+                            <constraint firstItem="XhC-Ka-f3Q" firstAttribute="centerY" secondItem="ot4-1Z-a1J" secondAttribute="centerY" id="S4A-qj-56i"/>
+                            <constraint firstItem="XhC-Ka-f3Q" firstAttribute="top" secondItem="rA9-KV-FIg" secondAttribute="bottom" constant="8" id="YeJ-0W-F9A"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ot4-1Z-a1J"/>
+                    </view>
+                    <connections>
+                        <outlet property="confirmPasswordTextField" destination="1UA-qq-F6c" id="03l-7H-eEf"/>
+                        <outlet property="emailTextField" destination="HZe-kh-9rh" id="j4W-bl-Gti"/>
+                        <outlet property="passwordTextField" destination="CD2-gr-cD2" id="l9p-h1-KKX"/>
+                        <outlet property="registerButton" destination="XhC-Ka-f3Q" id="oxe-9g-sEh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Rq-UY-fQ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4226" y="-681"/>
+        </scene>
+        <!--User Profile Table View Controller-->
+        <scene sceneID="rjm-8k-5nY">
+            <objects>
+                <tableViewController id="lVs-ki-FFb" customClass="UserProfileTableViewController" customModule="SmartNotes" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="rUr-4n-9Mo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="separatorColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="User email (you can't change it)" id="iBQ-Ri-Fps">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="Hjf-LN-Ddg" style="IBUITableViewCellStyleDefault" id="LcM-oL-rRX">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LcM-oL-rRX" id="gjg-0z-pXL">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="User email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hjf-LN-Ddg">
+                                                    <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Change Password" id="osl-ui-6ac">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="7d3-u4-hPj">
+                                        <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7d3-u4-hPj" id="flx-m5-uNT">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Old Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9aC-AI-rKl">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="43.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="43.5" id="5ak-p0-72V"/>
+                                                    </constraints>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" keyboardAppearance="alert" secureTextEntry="YES" textContentType="password"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="9aC-AI-rKl" secondAttribute="bottom" id="91A-jk-Dgy"/>
+                                                <constraint firstItem="9aC-AI-rKl" firstAttribute="top" secondItem="flx-m5-uNT" secondAttribute="top" id="Dvv-6s-qtR"/>
+                                                <constraint firstItem="9aC-AI-rKl" firstAttribute="leading" secondItem="flx-m5-uNT" secondAttribute="leading" constant="8" id="kmw-DF-o5B"/>
+                                                <constraint firstAttribute="trailing" secondItem="9aC-AI-rKl" secondAttribute="trailing" constant="8" id="ve7-0H-jr6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="n54-ZS-yPh">
+                                        <rect key="frame" x="0.0" y="199.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n54-ZS-yPh" id="fen-Ci-ryg">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i2p-JH-j9E">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="43.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="43.5" id="q0v-Bj-hwY"/>
+                                                    </constraints>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" keyboardAppearance="alert" secureTextEntry="YES" textContentType="password"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="i2p-JH-j9E" secondAttribute="bottom" id="G7U-Kw-UuN"/>
+                                                <constraint firstAttribute="trailing" secondItem="i2p-JH-j9E" secondAttribute="trailing" constant="8" id="GqH-9N-jKd"/>
+                                                <constraint firstItem="i2p-JH-j9E" firstAttribute="top" secondItem="fen-Ci-ryg" secondAttribute="top" id="QUo-wD-cqS"/>
+                                                <constraint firstItem="i2p-JH-j9E" firstAttribute="leading" secondItem="fen-Ci-ryg" secondAttribute="leading" constant="8" id="WqJ-nc-gyN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="dp5-35-Jbw">
+                                        <rect key="frame" x="0.0" y="243.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dp5-35-Jbw" id="c1Y-DZ-SuN">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xNs-iQ-nyZ">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="43.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="43.5" id="Tyl-H0-SOP"/>
+                                                    </constraints>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" keyboardAppearance="alert" secureTextEntry="YES" textContentType="password"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xNs-iQ-nyZ" firstAttribute="top" secondItem="c1Y-DZ-SuN" secondAttribute="top" id="V2u-YR-zEd"/>
+                                                <constraint firstAttribute="trailing" secondItem="xNs-iQ-nyZ" secondAttribute="trailing" constant="8" id="Vmp-tq-hLn"/>
+                                                <constraint firstAttribute="bottom" secondItem="xNs-iQ-nyZ" secondAttribute="bottom" id="sYI-ke-mGi"/>
+                                                <constraint firstItem="xNs-iQ-nyZ" firstAttribute="leading" secondItem="c1Y-DZ-SuN" secondAttribute="leading" constant="8" id="vft-gp-zVt"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="e9a-u0-IyO">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" textLabel="dDL-My-CEk" style="IBUITableViewCellStyleDefault" id="KnV-sh-q9Y">
+                                        <rect key="frame" x="0.0" y="323.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KnV-sh-q9Y" id="dx4-On-Qtj">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Change Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dDL-My-CEk">
+                                                    <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="vhz-VQ-bYc">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" textLabel="wbb-hU-uwN" style="IBUITableViewCellStyleDefault" id="S1W-LO-DC4">
+                                        <rect key="frame" x="0.0" y="403.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="S1W-LO-DC4" id="tm8-Yd-Qmm">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Log Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wbb-hU-uwN">
+                                                    <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" red="0.88945510790000004" green="0.23236771880000001" blue="0.19507114680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="lVs-ki-FFb" id="h2X-0q-XSF"/>
+                            <outlet property="delegate" destination="lVs-ki-FFb" id="vOb-pZ-PZf"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="P2N-9v-uhe">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="Dz5-yw-1wC">
+                            <connections>
+                                <action selector="doneTapped:" destination="lVs-ki-FFb" id="Xpc-oe-nnT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="confirmPasswordTextField" destination="xNs-iQ-nyZ" id="dj6-J2-ust"/>
+                        <outlet property="newPasswordTextField" destination="i2p-JH-j9E" id="Isv-19-8NH"/>
+                        <outlet property="oldPasswordTextField" destination="9aC-AI-rKl" id="eHJ-8V-aid"/>
+                        <outlet property="userEmailLabel" destination="Hjf-LN-Ddg" id="1Ay-1h-fXg"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RFx-cK-7Vs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3361" y="-1413"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wRt-R2-KMr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YHo-5m-akB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="WUY-lb-mUu">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Xpy-od-3vM" kind="relationship" relationship="rootViewController" id="Dga-CV-Mqc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sik-LC-uG0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2558" y="-681"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="3ZG-x9-poa">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fFH-iv-idF" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="VfH-bJ-c63">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lVs-ki-FFb" kind="relationship" relationship="rootViewController" id="cZi-sn-kzn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UD0-ML-aHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2557.5999999999999" y="-1412.7436281859073"/>
         </scene>
     </scenes>
     <resources>
         <image name="location_icon" width="37.5" height="37.5"/>
+        <image name="profile_icon" width="37.5" height="37.5"/>
         <image name="target_icon" width="37.5" height="37.5"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="tbd-dp-CeF"/>
         <segue reference="gUV-px-mIa"/>
     </inferredMetricsTieBreakers>
 </document>
