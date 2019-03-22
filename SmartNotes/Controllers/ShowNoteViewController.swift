@@ -113,11 +113,14 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
         if let text = noteTextView.attributedText,
             text.string != savedStateOfNote ||
             savedStateOFLocation?.longitude != location?.longitude &&
-            savedStateOFLocation?.latitude != location?.latitude {
+            savedStateOFLocation?.latitude != location?.latitude
+        {
+
             var new: Note?
-            
+            var isNew = true
             if let note = note {
                 new = note
+                isNew = false
             } else {
                 new = Note(context: context)
                 new?.id = UUID().uuidString
@@ -130,6 +133,33 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
 
             new?.details = text.replaceImagesWithTags(for: (new?.id)!)
             new?.date = Date()
+            if let _ = FirebaseManager.shared.getUser() {
+                if isNew {
+                    FirebaseManager.shared.save(note: new!) { error in
+                        if let error = error {
+                            print("[\(#function)] Error while saving note: \(error.localizedDescription)")
+                        } else {
+                            FirebaseManager.shared.saveAttachments(for: new!) { error in
+                                if error.count > 0 {
+                                    print("[\(#function)] Error while saving attachments: \(error[0].localizedDescription)")
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    FirebaseManager.shared.update(note: new!)  { error in
+                        if let error = error {
+                            print("[\(#function)] Error while updating note: \(error.localizedDescription)")
+                        } else {
+                            FirebaseManager.shared.saveAttachments(for: new!) { error in
+                                if error.count > 0 {
+                                    print("[\(#function)] Error while saving attachments: \(error[0].localizedDescription)")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             ad.saveContext()
         }
     }

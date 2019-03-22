@@ -39,8 +39,23 @@ class UserProfileTableViewController: UITableViewController, AlertDisplayable, L
         } else if indexPath.section == 2 && indexPath.row == 0 {
             changePassword()
         } else if indexPath.section == 3 && indexPath.row == 0 {
-            FirebaseManager.shared.logout()
-            self.navigationController?.dismiss(animated: true)
+            self.startLoading()
+            SyncManager.loadCloudNotesToLocalStorage { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    self.stopLoading {
+                        self.displayAlert(with: "Error",
+                                          message: "There is error while fetching data before logout. Try to login once again and sync")
+                        FirebaseManager.shared.logout()
+                        self.navigationController?.dismiss(animated: true)
+                    }
+                } else {
+                    self.stopLoading {
+                        FirebaseManager.shared.logout()
+                        self.navigationController?.dismiss(animated: true)
+                    }
+                }
+            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

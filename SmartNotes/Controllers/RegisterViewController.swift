@@ -41,6 +41,7 @@ class RegisterViewController: UIViewController, AlertDisplayable, LoadingDisplay
                     self.displayAlert(with: "Error", message: error.localizedDescription)
                 }
             } else {
+                FirebaseManager.shared.logout()
                 self.stopLoading {
                     self.navigationController?.popViewController(animated: true)
                 }

@@ -40,6 +40,8 @@
 		2B3AB6A12243DF7B00C3E430 /* DictionaryConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6A02243DF7B00C3E430 /* DictionaryConvertible.swift */; };
 		2B3AB6A32243E8A400C3E430 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6A22243E8A400C3E430 /* Result.swift */; };
 		2B3AB6A62244098C00C3E430 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6A52244098C00C3E430 /* Atomic.swift */; };
+		2B3AB6A82244505E00C3E430 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6A72244505E00C3E430 /* SyncManager.swift */; };
+		2B3AB6AA2244681200C3E430 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6A92244681200C3E430 /* Array.swift */; };
 		2B955FC8223AB55C008BCB22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FC7223AB55C008BCB22 /* AppDelegate.swift */; };
 		2B955FCD223AB55C008BCB22 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B955FCB223AB55C008BCB22 /* Main.storyboard */; };
 		2B955FD0223AB55C008BCB22 /* SmartNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FCE223AB55C008BCB22 /* SmartNotes.xcdatamodeld */; };
@@ -87,6 +89,8 @@
 		2B3AB6A02243DF7B00C3E430 /* DictionaryConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertible.swift; sourceTree = "<group>"; };
 		2B3AB6A22243E8A400C3E430 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		2B3AB6A52244098C00C3E430 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
+		2B3AB6A72244505E00C3E430 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
+		2B3AB6A92244681200C3E430 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		2B955FC4223AB55C008BCB22 /* SmartNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B955FC7223AB55C008BCB22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B955FCC223AB55C008BCB22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 				2B3AB613223DBF6A00C3E430 /* UIImage.swift */,
 				2B3AB635224053FF00C3E430 /* NSAttributedString.swift */,
 				2B3AB615223DC27C00C3E430 /* String.swift */,
+				2B3AB6A92244681200C3E430 /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 			children = (
 				2B3AB6572242DEF800C3E430 /* DataManager.swift */,
 				2B3AB69722432D7B00C3E430 /* FirebaseManager.swift */,
+				2B3AB6A72244505E00C3E430 /* SyncManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -372,6 +378,7 @@
 				2B955FD0223AB55C008BCB22 /* SmartNotes.xcdatamodeld in Sources */,
 				2B3AB6A12243DF7B00C3E430 /* DictionaryConvertible.swift in Sources */,
 				2B3AB614223DBF6A00C3E430 /* UIImage.swift in Sources */,
+				2B3AB6AA2244681200C3E430 /* Array.swift in Sources */,
 				2B3AB6A32243E8A400C3E430 /* Result.swift in Sources */,
 				2B3AB69F2243DF0B00C3E430 /* Note.swift in Sources */,
 				2B955FE2223AC3D7008BCB22 /* NotesViewController.swift in Sources */,
@@ -382,6 +389,7 @@
 				2B3AB6962243299000C3E430 /* RegisterViewController.swift in Sources */,
 				2B3AB636224053FF00C3E430 /* NSAttributedString.swift in Sources */,
 				2B3AB69A224331C000C3E430 /* LoadingDisplayable.swift in Sources */,
+				2B3AB6A82244505E00C3E430 /* SyncManager.swift in Sources */,
 				2B955FE6223AD7DA008BCB22 /* ShowNoteViewController.swift in Sources */,
 				2B3AB69822432D7B00C3E430 /* FirebaseManager.swift in Sources */,
 				2B3AB6942243295300C3E430 /* LoginViewController.swift in Sources */,
@@ -535,6 +543,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WXMC8MD6TM;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -563,6 +572,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WXMC8MD6TM;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

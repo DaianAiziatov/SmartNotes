@@ -37,17 +37,27 @@ class LoginViewController: UIViewController, AlertDisplayable, LoadingDisplayabl
     }
 
     private func login() {
-        self.startLoading()
         guard let email = emailTextField.text, let password = passwordTextField.text else {
             return
         }
+        self.startLoading()
         FirebaseManager.shared.login(with: email, password: password) { error in
             if let error = error {
                 self.stopLoading {
                     self.displayAlert(with: "Error", message:  error.localizedDescription)
                 }
             } else {
-                self.stopLoading { self.goToUserProfile() }
+                SyncManager.sync { error in
+                    if let _ = error {
+                        self.stopLoading {
+                            self.displayAlert(with: "Error", message:  "Enable to sync with cloud. Try again later")
+                        }
+                    } else {
+                        print("______________________HERE__________________")
+                        self.stopLoading { self.goToUserProfile() }
+                    }
+                }
+
             }
         }
     }

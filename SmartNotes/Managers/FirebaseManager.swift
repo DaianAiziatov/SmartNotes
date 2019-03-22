@@ -64,6 +64,7 @@ class FirebaseManager {
 
     func update(oldPassword: String, with newPassword: String, completion: @escaping (Error?) -> ()) {
         guard let user = user, let email = user.email else {
+            completion(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
             return
         }
         let credential = EmailAuthProvider.credential(withEmail: email, password: oldPassword)
@@ -78,6 +79,7 @@ class FirebaseManager {
 
     func loadNotes(completion: @escaping (Result<[Note], NSError>) -> ()) {
         guard let user = user else {
+            completion(Result.failure(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil)))
             return
         }
         var notes = [Note]()
@@ -98,6 +100,7 @@ class FirebaseManager {
 
     func save(note: Note, completion: @escaping (Error?) -> ()) {
         guard let user = user, let id = note.id else {
+            completion(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
             return
         }
         let noteRef = userRef.child("users").child(user.uid).child("notes").child(id)
@@ -113,6 +116,7 @@ class FirebaseManager {
 
     func deleteNote(with id: String, completion: @escaping (Error?) -> ()) {
         guard let user = user else {
+            completion(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
             return
         }
         let noteRef = userRef.child("users").child(user.uid).child("notes").child(id)
@@ -127,6 +131,7 @@ class FirebaseManager {
 
     func update(note: Note, completion: @escaping (Error?) -> ()) {
         guard let user = user, let id = note.id else {
+            completion(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
             return
         }
         let noteDict = note.dict
@@ -141,10 +146,20 @@ class FirebaseManager {
     }
 
     func saveAttachments(for note: Note, completion: @escaping ([Error]) -> ()) {
+        print("[FirebaseManager.\(#function)] Start saving attachments")
         guard let user = user, let details = note.details else {
+            print("[FirebaseManager.\(#function)] Failed to fetch user")
+            var errors =  [Error]()
+            errors.append(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
+            completion(errors)
             return
         }
         let urls = details.getLocalURLsOfAttachments()
+        print("[FirebaseManager.\(#function)] Fetched \(urls.count) urls inside note")
+        guard urls.count > 0 else {
+            completion([Error]())
+            return
+        }
         let errors = Atomic<[Error]>([Error]())
         let count = Atomic<Int>(0)
         for url in urls {
@@ -164,6 +179,7 @@ class FirebaseManager {
 
     func loadAttachmentsURL(for note: Note, completion: @escaping (Result<[URL], NSError>) -> ()) {
         guard let user = user, let details = note.details else {
+            completion(Result.failure(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil)))
             return
         }
         let urls = details.getLocalURLsOfAttachments()
@@ -201,6 +217,7 @@ class FirebaseManager {
 
     func deleteAttachment(with localURL: URL, completion: @escaping (Error?) -> ()) {
         guard let user = user else {
+            completion(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
             return
         }
         let attachmentsRef = storageRef.child(user.uid).child(localURL.path)

@@ -23,6 +23,8 @@ class NotesViewController: UIViewController, AlertDisplayable, LoadingDisplayabl
         if let _ = FirebaseManager.shared.getUser() {
             let syncButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
             navigationItem.rightBarButtonItem = syncButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
         }
     }
 
@@ -90,22 +92,16 @@ class NotesViewController: UIViewController, AlertDisplayable, LoadingDisplayabl
 
     @objc
     private func refresh() {
-        //self.startLoading()
-        let count = Atomic<Int>(0)
-        for note in notes {
-            FirebaseManager.shared.save(note: note) { error in
-                if let error = error {
-                    print("[\(#function)] Error: \(error.localizedDescription)")
-                } else {
-                    FirebaseManager.shared.saveAttachments(for: note) { errors in
-                        if errors.count > 0 {
-                            for error in errors {
-                                print("[\(#function)] Error: \(error.localizedDescription)")
-                            }
-                        } else {
-                            print("[\(#function)] Success")
-                        }
-                    }
+        self.startLoading()
+        SyncManager.sync { error in
+            if let error = error {
+                print("[\(#function)] Error: \(error.localizedDescription)")
+                self.stopLoading {
+                    self.displayAlert(with: "Error", message: "Some error occured while refreshing. Try again later.")
+                }
+            } else {
+                self.stopLoading {
+                    self.loadNotes()
                 }
             }
         }
@@ -136,7 +132,9 @@ class NotesViewController: UIViewController, AlertDisplayable, LoadingDisplayabl
 
 // MARK: - UITableView Delegate
 extension NotesViewController: UITableViewDelegate {
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("SELECTED NOTE WITH ID: \(notes[indexPath.row].id!)")
+    }
 }
 
 // MARK: - UITableView Data Source
@@ -162,8 +160,16 @@ extension NotesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let confirm = UIAlertAction(title: "Confirm", style: .default, handler: ({ action in
-                context.delete(self.notes[indexPath.row])
-                DataManager.deleteFolderForNote(with: self.notes[indexPath.row].id!)
+                let note = self.notes[indexPath.row]
+                if let _ = FirebaseManager.shared.getUser() {
+                    FirebaseManager.shared.deleteNote(with: note.id!) { error in
+                        if let error = error {
+                            print("[\(#function)] Error while deleting note from cloud: \(error.localizedDescription)")
+                        }
+                    }
+                }
+                context.delete(note)
+                DataManager.deleteFolderForNote(with: note.id!)
                 self.loadNotes()
             }))
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

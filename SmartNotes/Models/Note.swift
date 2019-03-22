@@ -28,13 +28,17 @@ extension Note: DictionaryConvertible {
             let locationLatitude = note["locationLatitude"] as? Double,
             let locationLongitude = note["locationLongitude"] as? Double
         {
-            let newNote = Note(context: context)
-            newNote.id = id
-            newNote.date = Date(timeIntervalSince1970: date)
-            newNote.details = details
-            newNote.locationLatitude = locationLatitude
-            newNote.locationLongitude = locationLongitude
-            return newNote
+            if !DataManager.isExistNote(with: id) {
+                let newNote = Note(context: context)
+                newNote.id = id
+                newNote.date = Date(timeIntervalSince1970: date)
+                newNote.details = details
+                newNote.locationLatitude = locationLatitude
+                newNote.locationLongitude = locationLongitude
+                return newNote
+            } else {
+                return nil
+            }
         } else {
             return nil
         }

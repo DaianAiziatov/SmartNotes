@@ -15,15 +15,52 @@ class DataManager {
     static let localDoumentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
 
     static func loadNotes() -> [Note]? {
+        print("[DataManager.\(#function)]: Start load notes from local storage")
         let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
         do {
             var notes = try context.fetch(fetchRequest)
             notes.sort(by: {$0.date! > $1.date!})
+            print("[DataManager.\(#function)]: Returning notes")
             return notes
         } catch (let error) {
             print("[DataManager.\(#function)]: Cannot fetch from database. Error: \(error.localizedDescription)")
             return nil
         }
+    }
+
+    static func save(note: Note) {
+        guard
+            let id = note.id,
+            let date = note.date,
+            let details = note.details
+            else { return }
+        if isExistNote(with: id) {
+            print("[DataManager.\(#function)] Already exist \(id)")
+        } else {
+            print("[DataManager.\(#function)] Saving \(id)")
+            let locationLatitude = note.locationLatitude
+            let locationLongitude = note.locationLongitude
+            let new = Note(context: context)
+            new.id = id
+            new.date = date
+            new.details = details
+            new.locationLongitude = locationLongitude
+            new.locationLatitude = locationLatitude
+            ad.saveContext()
+        }
+    }
+
+    static func isExistNote(with noteID: String) -> Bool {
+        if let localNotes = loadNotes() {
+            let noteWithId = localNotes.filter({ $0.id == noteID })
+            print(noteWithId)
+            if noteWithId.count > 0 {
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
     }
 
     static func deleteFolderForNote(with noteID: String) {
