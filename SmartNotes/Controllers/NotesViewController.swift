@@ -165,6 +165,12 @@ extension NotesViewController: UITableViewDataSource {
                     FirebaseManager.shared.deleteNote(with: note.id!) { error in
                         if let error = error {
                             print("[\(#function)] Error while deleting note from cloud: \(error.localizedDescription)")
+                        } else {
+                            FirebaseManager.shared.deleteAttachments(for: note) { error in
+                                if let error = error {
+                                    print("[\(#function)] Error while deleting attachments for note from cloud: \(error.localizedDescription)")
+                                }
+                            }
                         }
                     }
                 }

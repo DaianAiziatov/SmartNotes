@@ -203,15 +203,23 @@ class FirebaseManager {
     }
 
     func deleteAttachments(for note: Note, completion: @escaping (Error?) -> ()) {
-        guard let user = user, let id = note.id else {
+        guard let _ = user, let details = note.details else {
+            completion(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
             return
         }
-        let attachmentsRef = storageRef.child(user.uid).child(id)
-        attachmentsRef.delete { error in
-            if let error = error {
-                completion(error)
+        let attachmentsURLS = details.getLocalURLsOfAttachments()
+        let count = Atomic<Int>(0)
+        for url in attachmentsURLS {
+            deleteAttachment(with: url) { error in
+                count.mutate { $0 += 1 }
+                if let error = error {
+                    print("[FirebaseManager.\(#function)] Error: \(error.localizedDescription)")
+                    completion(error)
+                }
+                if count.value == attachmentsURLS.count {
+                    completion(nil)
+                }
             }
-            completion(nil)
         }
     }
 
