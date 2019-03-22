@@ -1,1 +1,2 @@
-GoogleService-Info.plist
+SmartNotes/GoogleService-Info.plist
+Carthage/Build/iOS/FirebaseCore.framework/Headers/FIROptions.h
