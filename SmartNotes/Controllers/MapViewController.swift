@@ -83,9 +83,12 @@ class MapViewController: UIViewController, AlertDisplayable {
 
     @objc
     private func openAppleMapsTapped() {
-        let openAppleMap = UIAlertAction(title: "Open in Apple Maps", style: .default, handler: openAppleMaps(action:))
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        displayAlert(with: nil, message: nil, actions: [openAppleMap, cancel], style: .actionSheet)
+        if let location = location {
+            let activity = UIActivityViewController(activityItems: [location], applicationActivities: nil)
+            present(activity, animated: true, completion: nil)
+        } else {
+            displayAlert(with: "Oops!:(", message: "No location saved")
+        }
     }
 
     private func openAppleMaps(action: UIAlertAction) -> Void {
