@@ -12,11 +12,11 @@
   "iOS" : [
     {
       "name" : "IQKeyboardManager",
-      "hash" : "5a0a5edb77364d63f339e937b18713b47bf68c1280bfea90b74fb1abb6c9592b"
+      "hash" : "4e70e77f2461386622e337cd29c1e647973f33dd464cb399e32f6796003ba49c"
     },
     {
       "name" : "IQKeyboardManagerSwift",
-      "hash" : "fba2715b80401d9f6b5e281fc1af668acbf2ad45fe24d7e5e3e7f8d7a108f61d"
+      "hash" : "a297a8181b1a88e03c2fcd5251163d213a4bf47c89d4dff2d5d400503d0981a7"
     }
   ]
 }

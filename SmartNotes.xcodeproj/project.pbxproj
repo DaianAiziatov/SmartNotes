@@ -30,7 +30,6 @@
 		2B3AB67C2242ECE200C3E430 /* leveldb-library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3AB67B2242ECE200C3E430 /* leveldb-library.framework */; };
 		2B3AB68A2242EE0900C3E430 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3AB6892242EE0900C3E430 /* StoreKit.framework */; };
 		2B3AB68C2242EEE500C3E430 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3AB68B2242EEE500C3E430 /* Firebase.framework */; };
-		2B3AB68E2242EF5A00C3E430 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B3AB68D2242EF5A00C3E430 /* GoogleService-Info.plist */; };
 		2B3AB6942243295300C3E430 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6932243295300C3E430 /* LoginViewController.swift */; };
 		2B3AB6962243299000C3E430 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6952243299000C3E430 /* RegisterViewController.swift */; };
 		2B3AB69822432D7B00C3E430 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB69722432D7B00C3E430 /* FirebaseManager.swift */; };
@@ -44,6 +43,7 @@
 		2B3AB6AA2244681200C3E430 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6A92244681200C3E430 /* Array.swift */; };
 		2B3AB6CA2245B85500C3E430 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6C92245B85500C3E430 /* DrawViewController.swift */; };
 		2B3AB6CD2245C77100C3E430 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6CC2245C77100C3E430 /* SettingsViewController.swift */; };
+		2B3AB6D02245EAC500C3E430 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B3AB6CF2245EAC500C3E430 /* GoogleService-Info.plist */; };
 		2B955FC8223AB55C008BCB22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FC7223AB55C008BCB22 /* AppDelegate.swift */; };
 		2B955FCD223AB55C008BCB22 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B955FCB223AB55C008BCB22 /* Main.storyboard */; };
 		2B955FD0223AB55C008BCB22 /* SmartNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FCE223AB55C008BCB22 /* SmartNotes.xcdatamodeld */; };
@@ -81,7 +81,6 @@
 		2B3AB67B2242ECE200C3E430 /* leveldb-library.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "leveldb-library.framework"; path = "Carthage/Build/iOS/leveldb-library.framework"; sourceTree = "<group>"; };
 		2B3AB6892242EE0900C3E430 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		2B3AB68B2242EEE500C3E430 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Firebase.framework; path = Carthage/Build/iOS/Firebase.framework; sourceTree = "<group>"; };
-		2B3AB68D2242EF5A00C3E430 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2B3AB6932243295300C3E430 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2B3AB6952243299000C3E430 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		2B3AB69722432D7B00C3E430 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
@@ -95,6 +94,7 @@
 		2B3AB6A92244681200C3E430 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		2B3AB6C92245B85500C3E430 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
 		2B3AB6CC2245C77100C3E430 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		2B3AB6CF2245EAC500C3E430 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2B955FC4223AB55C008BCB22 /* SmartNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B955FC7223AB55C008BCB22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B955FCC223AB55C008BCB22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -268,7 +268,7 @@
 				2B955FC7223AB55C008BCB22 /* AppDelegate.swift */,
 				2B955FD1223AB560008BCB22 /* Assets.xcassets */,
 				2B955FD6223AB560008BCB22 /* Info.plist */,
-				2B3AB68D2242EF5A00C3E430 /* GoogleService-Info.plist */,
+				2B3AB6CF2245EAC500C3E430 /* GoogleService-Info.plist */,
 				2B955FCE223AB55C008BCB22 /* SmartNotes.xcdatamodeld */,
 			);
 			name = Sources;
@@ -359,10 +359,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B3AB6D02245EAC500C3E430 /* GoogleService-Info.plist in Resources */,
 				2B955FD5223AB560008BCB22 /* LaunchScreen.storyboard in Resources */,
 				2B955FD2223AB560008BCB22 /* Assets.xcassets in Resources */,
 				2B955FCD223AB55C008BCB22 /* Main.storyboard in Resources */,
-				2B3AB68E2242EF5A00C3E430 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

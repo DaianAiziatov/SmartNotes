@@ -202,7 +202,7 @@ extension NotesViewController: UISearchBarDelegate {
         let descByTitle = UIAlertAction(title: "Order DESC by title", style: .default, handler: orderDESCbyTitle(action:))
         let ascByDate = UIAlertAction(title: "Order ASC by date", style: .default, handler: orderASCbyDate(action:))
         let descByDate = UIAlertAction(title: "Order DESC by date", style: .default, handler: orderDESCbyDate(action:))
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         displayAlert(with: nil, message: nil, actions: [ascByTitle, descByTitle, ascByDate, descByDate, cancel], style: .actionSheet)
     }
 

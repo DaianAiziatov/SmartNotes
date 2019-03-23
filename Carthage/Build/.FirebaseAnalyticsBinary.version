@@ -11,6 +11,14 @@
   "commitish" : "5.19.0",
   "iOS" : [
     {
+      "name" : "FIRAnalyticsConnector",
+      "hash" : "d917f31b4a5d4c6124fe67dd01fb57bdc65d24e1dcabe0cfeec1b231f75591ce"
+    },
+    {
+      "name" : "nanopb",
+      "hash" : "92cafd16bf77b741e9d8206f7c7d47946122c9643a5d2e11ccf5dc940b303c6e"
+    },
+    {
       "name" : "FirebaseAnalytics",
       "hash" : "2e51baad6774f91dc9cbd8546267b4b3c214a856bc38148bc9ed9c9266c601b5"
     },
@@ -21,14 +29,6 @@
     {
       "name" : "FirebaseCore",
       "hash" : "f75ade0298e54273b39c90bd5b08d14974429947289643f23c85359e17f94cb2"
-    },
-    {
-      "name" : "FIRAnalyticsConnector",
-      "hash" : "d917f31b4a5d4c6124fe67dd01fb57bdc65d24e1dcabe0cfeec1b231f75591ce"
-    },
-    {
-      "name" : "nanopb",
-      "hash" : "92cafd16bf77b741e9d8206f7c7d47946122c9643a5d2e11ccf5dc940b303c6e"
     },
     {
       "name" : "GoogleUtilities",
