@@ -59,6 +59,10 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
                 destination.delegate = self
                 destination.location = location
             }
+        } else if segue.identifier == "showDrawer" {
+            if let destination = segue.destination as? DrawViewController {
+                destination.delegate = self
+            }
         }
     }
 
@@ -193,6 +197,13 @@ extension ShowNoteViewController: UIImagePickerControllerDelegate, UINavigationC
             append(image: image)
             dismiss(animated:true, completion: nil)
         }
+    }
+}
+
+extension ShowNoteViewController: DrawViewControllerDelegate {
+    func saveSketch(image: UIImage) {
+        append(image: image)
+        dismiss(animated:true, completion: nil)
     }
 }
 
