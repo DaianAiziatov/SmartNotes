@@ -159,7 +159,7 @@ extension NotesViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let confirm = UIAlertAction(title: "Confirm", style: .default, handler: ({ action in
+            let confirm = UIAlertAction(title: "Confirm", style: .default, handler: ({ [unowned self] action in
                 let note = self.notes[indexPath.row]
                 if let _ = FirebaseManager.shared.getUser() {
                     FirebaseManager.shared.deleteNote(with: note.id!) { error in

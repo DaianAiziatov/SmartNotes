@@ -71,6 +71,7 @@ class DataManager {
             print("[DataManger.\(#function)] Error: \(error.localizedDescription)")
         }
     }
+    
     static func clearFolderForNote(with noteID: String) {
         let noteDirectoryURL = localDoumentsDirectoryURL.appendingPathComponent(noteID)
         do {
@@ -84,6 +85,28 @@ class DataManager {
             }
         } catch(let error) {
             print("[DataManger.\(#function)] Error: \(error.localizedDescription)")
+        }
+    }
+
+    static func createRecordingsDirectory(for noteID: String) -> Bool {
+        let noteRecordingsDirectoryURL = localDoumentsDirectoryURL.appendingPathComponent(noteID).appendingPathComponent("recordings")
+        do {
+            if !fileManager.fileExists(atPath: noteRecordingsDirectoryURL.path) {
+                try fileManager.createDirectory(atPath: noteRecordingsDirectoryURL.path, withIntermediateDirectories: true, attributes: nil)
+                return true
+            }
+            return true
+        } catch(let error) {
+            print("[DataManager.\(#function)] Error while creating recording directory: \(error.localizedDescription)")
+            return false
+        }
+    }
+
+    static func countRecordings(for noteID: String) -> Int {
+        if let directoryContents = fileManager.contents(atPath: "\(noteID)/recordings/") {
+            return directoryContents.count
+        } else {
+            return 0
         }
     }
 }

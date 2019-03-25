@@ -150,6 +150,10 @@
                                             <segue destination="BUv-5N-w7S" kind="show" identifier="showMap" id="Hja-2d-2Tq"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="k4s-Ha-tAa"/>
+                                    <barButtonItem title="Item" image="record_icon" id="B3B-cf-WjL">
+                                        <color key="tintColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="KjM-kP-5tf"/>
                                 </items>
                             </toolbar>
@@ -179,9 +183,12 @@
                         <viewLayoutGuide key="safeArea" id="X6k-MA-CAy"/>
                     </view>
                     <connections>
+                        <outlet property="cameraButton" destination="daX-eH-gFo" id="mF6-L6-thX"/>
                         <outlet property="locationButton" destination="EV7-Su-T33" id="gE9-AY-PVG"/>
                         <outlet property="mapView" destination="CeS-NP-WAP" id="dx5-u6-o0W"/>
                         <outlet property="noteTextView" destination="BFf-UX-qbs" id="0Wi-wb-uAU"/>
+                        <outlet property="recordButton" destination="B3B-cf-WjL" id="MdW-xj-rUV"/>
+                        <outlet property="sketchButton" destination="Ggj-79-9Mp" id="CbM-CG-0GK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fOq-z6-QDD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -966,6 +973,7 @@
         <image name="eraser_icon" width="37.5" height="37.5"/>
         <image name="location_icon" width="37.5" height="37.5"/>
         <image name="profile_icon" width="37.5" height="37.5"/>
+        <image name="record_icon" width="37.5" height="37.5"/>
         <image name="reset_icon" width="37.5" height="37.5"/>
         <image name="setteings_icon" width="37.5" height="37.5"/>
         <image name="target_icon" width="37.5" height="37.5"/>

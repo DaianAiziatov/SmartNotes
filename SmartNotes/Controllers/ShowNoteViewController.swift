@@ -9,14 +9,23 @@
 import UIKit
 import CoreData
 import MapKit
+import AVFoundation
 
-class ShowNoteViewController: UIViewController, AlertDisplayable {
+class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplayable {
 
     @IBOutlet private weak var noteTextView: UITextView!
     @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var cameraButton: UIBarButtonItem!
+    @IBOutlet private weak var sketchButton: UIBarButtonItem!
     @IBOutlet private weak var locationButton: UIBarButtonItem!
-    
+    @IBOutlet private weak var recordButton: UIBarButtonItem! {
+        didSet {
+            recordButton.action = #selector(record)
+        }
+    }
+
     private var locationManager = CLLocationManager()
+    private var recorder: Recorder!
 
     private var savedStateOfTextView = ""
     private var savedStateOfNote = ""
@@ -27,6 +36,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        recorder = Recorder(delegate: self)
         let font = UIFont(name: "Futura", size: 17.0)
         self.navigationItem.largeTitleDisplayMode = .never
         mapView.isHidden = true
@@ -76,6 +86,62 @@ class ShowNoteViewController: UIViewController, AlertDisplayable {
     @objc
     private func showMap(sender: UIBarButtonItem) {
         mapView.isHidden = !mapView.isHidden
+    }
+
+    @objc
+    private func record(sender: UIBarButtonItem, for event: UIEvent) {
+        if recorder.isRecording {
+            stopRecordingUI()
+            recorder.finishRecording(success: true)
+        } else {
+            guard let note = note, let id = note.id else {
+                return
+            }
+            guard DataManager.createRecordingsDirectory(for: id) else {
+                return
+            }
+            startRecordingUI()
+            recorder.requestRecordPermission { [unowned self] allowed, error in
+                if allowed {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MM-dd-yy_hh-mm-ss"
+                    let date = dateFormatter.string(from: Date())
+                    self.recorder.startRecording(to: "\(id)/recordings/\(date)_\(id).m4a") { [unowned self] error in
+                        if let error = error {
+                            print("[ShowNoteViewController.\(#function)] Error: \(error.localizedDescription)")
+                            self.recorder.finishRecording(success: false)
+                            DispatchQueue.main.async {
+                                self.stopRecordingUI()
+                            }
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.stopRecordingUI()
+                    }
+                    self.displayAlert(with: "Please allow recording in order to start recording", message: "You can do it in preferences manually")
+                }
+                if let error = error {
+                    print("[ShowNoteViewController.\(#function)] Error WHILE REQUESTING PERMISSION: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    private func startRecordingUI() {
+        recordButton.image = UIImage(named: "stop_icon")
+        locationButton.isEnabled = false
+        sketchButton.isEnabled = false
+        cameraButton.isEnabled = false
+        self.noteTextView.addBlurEffect()
+    }
+
+    private func stopRecordingUI() {
+        self.recordButton.image = UIImage(named: "record_icon")
+        self.locationButton.isEnabled = true
+        self.sketchButton.isEnabled = true
+        self.cameraButton.isEnabled = true
+        self.noteTextView.removeBlurEffect()
     }
 
     private func openCamera(action: UIAlertAction) -> Void {
@@ -201,10 +267,14 @@ extension ShowNoteViewController: UIImagePickerControllerDelegate, UINavigationC
 }
 
 extension ShowNoteViewController: DrawViewControllerDelegate {
+    
     func saveSketch(image: UIImage) {
         append(image: image)
         dismiss(animated:true, completion: nil)
     }
 }
 
+extension ShowNoteViewController: AVAudioRecorderDelegate {
+
+}
 
