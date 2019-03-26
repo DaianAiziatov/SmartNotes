@@ -46,7 +46,7 @@
 		2B3AB6D02245EAC500C3E430 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B3AB6CF2245EAC500C3E430 /* GoogleService-Info.plist */; };
 		2B3AB6F42246A65200C3E430 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6F32246A65200C3E430 /* Recorder.swift */; };
 		2B3AB6F622495F3300C3E430 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6F522495F3300C3E430 /* UIView.swift */; };
-		2B3AB71822496B7600C3E430 /* RecordingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB71722496B7600C3E430 /* RecordingsTableViewController.swift */; };
+		2B3AB7382249D25E00C3E430 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB7372249D25E00C3E430 /* Player.swift */; };
 		2B955FC8223AB55C008BCB22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FC7223AB55C008BCB22 /* AppDelegate.swift */; };
 		2B955FCD223AB55C008BCB22 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B955FCB223AB55C008BCB22 /* Main.storyboard */; };
 		2B955FD0223AB55C008BCB22 /* SmartNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FCE223AB55C008BCB22 /* SmartNotes.xcdatamodeld */; };
@@ -58,6 +58,7 @@
 		2B955FE8223AE24D008BCB22 /* AlertDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FE7223AE24D008BCB22 /* AlertDisplayable.swift */; };
 		2B955FEA223AFF9C008BCB22 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B955FE9223AFF9C008BCB22 /* MapViewController.swift */; };
 		2B955FF1223B48B1008BCB22 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B955FF0223B48B1008BCB22 /* IQKeyboardManagerSwift.framework */; };
+		2BFC91D62249E3E300182D89 /* RecordingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFC91D52249E3E300182D89 /* RecordingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,7 +101,7 @@
 		2B3AB6CF2245EAC500C3E430 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2B3AB6F32246A65200C3E430 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		2B3AB6F522495F3300C3E430 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
-		2B3AB71722496B7600C3E430 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsTableViewController.swift; sourceTree = "<group>"; };
+		2B3AB7372249D25E00C3E430 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		2B955FC4223AB55C008BCB22 /* SmartNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B955FC7223AB55C008BCB22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B955FCC223AB55C008BCB22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -114,6 +115,7 @@
 		2B955FE7223AE24D008BCB22 /* AlertDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDisplayable.swift; sourceTree = "<group>"; };
 		2B955FE9223AFF9C008BCB22 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		2B955FF0223B48B1008BCB22 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
+		2BFC91D52249E3E300182D89 /* RecordingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 				2B3AB69722432D7B00C3E430 /* FirebaseManager.swift */,
 				2B3AB6A72244505E00C3E430 /* SyncManager.swift */,
 				2B3AB6F32246A65200C3E430 /* Recorder.swift */,
+				2B3AB7372249D25E00C3E430 /* Player.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -255,7 +258,7 @@
 				2B955FE1223AC3D7008BCB22 /* NotesViewController.swift */,
 				2B955FE5223AD7DA008BCB22 /* ShowNoteViewController.swift */,
 				2B955FE9223AFF9C008BCB22 /* MapViewController.swift */,
-				2B3AB71722496B7600C3E430 /* RecordingsTableViewController.swift */,
+				2BFC91D52249E3E300182D89 /* RecordingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -412,10 +415,11 @@
 				2B3AB614223DBF6A00C3E430 /* UIImage.swift in Sources */,
 				2B3AB6F622495F3300C3E430 /* UIView.swift in Sources */,
 				2B3AB6AA2244681200C3E430 /* Array.swift in Sources */,
-				2B3AB71822496B7600C3E430 /* RecordingsTableViewController.swift in Sources */,
 				2B3AB6CD2245C77100C3E430 /* SettingsViewController.swift in Sources */,
+				2B3AB7382249D25E00C3E430 /* Player.swift in Sources */,
 				2B3AB6A32243E8A400C3E430 /* Result.swift in Sources */,
 				2B3AB69F2243DF0B00C3E430 /* Note.swift in Sources */,
+				2BFC91D62249E3E300182D89 /* RecordingsViewController.swift in Sources */,
 				2B955FE2223AC3D7008BCB22 /* NotesViewController.swift in Sources */,
 				2B3AB616223DC27C00C3E430 /* String.swift in Sources */,
 				2B955FE8223AE24D008BCB22 /* AlertDisplayable.swift in Sources */,

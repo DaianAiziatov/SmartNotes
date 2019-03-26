@@ -71,6 +71,14 @@ class DataManager {
             print("[DataManger.\(#function)] Error: \(error.localizedDescription)")
         }
     }
+
+    static func deleteFile(with localURL: URL) {
+        do {
+            try fileManager.removeItem(at: localURL)
+        } catch(let error) {
+            print("[DataManger.\(#function)] Error: \(error.localizedDescription)")
+        }
+    }
     
     static func clearFolderForNote(with noteID: String) {
         let noteDirectoryURL = localDoumentsDirectoryURL.appendingPathComponent(noteID)

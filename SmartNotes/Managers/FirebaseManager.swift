@@ -208,20 +208,50 @@ class FirebaseManager {
     }
 
     func deleteAttachments(for note: Note, completion: @escaping (Error?) -> ()) {
-        guard let _ = user, let details = note.details else {
+        guard let _ = user, let details = note.details, let id = note.id else {
             completion(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
             return
         }
         let attachmentsURLS = details.getLocalURLsOfAttachments()
+        let recordingURLs = DataManager.getRecordingsURL(for: id).compactMap({ URL(string: $0.pathComponents.suffix(3).joined(separator: "/"))})
+        print(DataManager.getRecordingsURL(for: id))
+        let urls = attachmentsURLS + recordingURLs
+        guard urls.count > 0 else {
+            completion(nil)
+            return
+        }
         let count = Atomic<Int>(0)
-        for url in attachmentsURLS {
+        for url in urls {
             deleteAttachment(with: url) { error in
+                print("[FirebaseManager.\(#function)] deleting from: \(url)")
                 count.mutate { $0 += 1 }
                 if let error = error {
                     print("[FirebaseManager.\(#function)] Error: \(error.localizedDescription)")
                     completion(error)
                 }
-                if count.value == attachmentsURLS.count {
+                if count.value == urls.count {
+                    completion(nil)
+                }
+            }
+        }
+    }
+
+    func deleteRecordings(for note: Note, completion: @escaping (Error?) -> ()) {
+        guard let _ = user, let id = note.id else {
+            completion(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
+            return
+        }
+        let recordingURLs = DataManager.getRecordingsURL(for: id).compactMap({ URL(string: $0.pathComponents.suffix(3).joined(separator: "/"))})
+        let count = Atomic<Int>(0)
+        for url in recordingURLs {
+            deleteAttachment(with: url) { error in
+                print("[FirebaseManager.\(#function)] deleting from: \(url)")
+                count.mutate { $0 += 1 }
+                if let error = error {
+                    print("[FirebaseManager.\(#function)] Error: \(error.localizedDescription)")
+                    completion(error)
+                }
+                if count.value == recordingURLs.count {
                     completion(nil)
                 }
             }

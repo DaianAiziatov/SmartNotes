@@ -80,7 +80,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplay
                 destination.delegate = self
             }
         } else if segue.identifier == "showRecordings" {
-            if let destination = segue.destination as? RecordingsTableViewController {
+            if let destination = segue.destination as? RecordingsViewController {
                 saveNote()
                 destination.note = note
             }
@@ -90,7 +90,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplay
     @IBAction func addPhotoTapped(_ sender: UIBarButtonItem) {
         let takePhoto = UIAlertAction(title: "Take Photo", style: .default, handler: openCamera(action:))
         let openLibrary = UIAlertAction(title: "Open Library", style: .default, handler: openLibrary(action:))
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         displayAlert(with: nil, message: nil, actions: [takePhoto, openLibrary, cancel], style: .actionSheet)
     }
 
