@@ -29,6 +29,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplay
 
     private var savedStateOfTextView = ""
     private var savedStateOfNote = ""
+    private var savedRecordingsCount = 0
     private var savedStateOFLocation: CLLocationCoordinate2D?
     private var location: CLLocationCoordinate2D?
 
@@ -36,6 +37,10 @@ class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplay
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let showRecordings = UIBarButtonItem(image: UIImage(named: "records_library_icon"),
+                                      style: .plain, target: self,
+                                      action: #selector(showRecordings(sender:)))
+        navigationItem.rightBarButtonItem = showRecordings
         recorder = Recorder(delegate: self)
         let font = UIFont(name: "Futura", size: 17.0)
         self.navigationItem.largeTitleDisplayMode = .never
@@ -43,6 +48,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplay
         if let note = note {
             noteTextView.attributedText = note.details?.replaceImgTagsWithImages()
             savedStateOfNote = note.details ?? ""
+            savedRecordingsCount = DataManager.getRecordingsURL(for: note.id!).count
             savedStateOFLocation = CLLocationCoordinate2D(latitude: note.locationLatitude, longitude: note.locationLongitude)
             if note.locationLatitude != 0.0 && note.locationLongitude != 0.0 {
                 location = CLLocationCoordinate2D(latitude: note.locationLatitude, longitude: note.locationLongitude)
@@ -73,6 +79,11 @@ class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplay
             if let destination = segue.destination as? DrawViewController {
                 destination.delegate = self
             }
+        } else if segue.identifier == "showRecordings" {
+            if let destination = segue.destination as? RecordingsTableViewController {
+                saveNote()
+                destination.note = note
+            }
         }
     }
 
@@ -86,6 +97,11 @@ class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplay
     @objc
     private func showMap(sender: UIBarButtonItem) {
         mapView.isHidden = !mapView.isHidden
+    }
+
+    @objc
+    private func showRecordings(sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showRecordings", sender: self)
     }
 
     @objc
@@ -175,15 +191,17 @@ class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplay
             let showMap = UIBarButtonItem(image: UIImage(named: "map_icon"),
                                           style: .plain, target: self,
                                           action: #selector(showMap(sender:)))
-            navigationItem.rightBarButtonItem = showMap
+            navigationItem.rightBarButtonItems?.append(showMap)
         }
     }
 
     private func saveNote() {
+
         if let text = noteTextView.attributedText,
             text.string != savedStateOfNote ||
             savedStateOFLocation?.longitude != location?.longitude &&
-            savedStateOFLocation?.latitude != location?.latitude
+            savedStateOFLocation?.latitude != location?.latitude ||
+            savedRecordingsCount != DataManager.getRecordingsURL(for: note?.id ?? "no note").count
         {
 
             var new: Note?
@@ -201,6 +219,7 @@ class ShowNoteViewController: UIViewController, AlertDisplayable, LoadingDisplay
                 new?.locationLatitude = location.latitude
             }
 
+            new?.recordings = DataManager.getRecordingsURL(for: new!.id!).map({ $0.pathComponents.suffix(3).joined(separator: "/") })
             new?.details = text.replaceImagesWithTags(for: (new?.id)!)
             new?.date = Date()
             if let _ = FirebaseManager.shared.getUser() {

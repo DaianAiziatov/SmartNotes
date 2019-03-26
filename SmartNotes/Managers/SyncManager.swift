@@ -47,13 +47,13 @@ class SyncManager {
                             completion(error)
                         case .success(let urls):
                             for url in urls {
-                                UIImage.load(from: url) { result in
+                                DataManager.downloadData(from: url) { result in
                                     switch result {
                                     case .failure(let error):
                                         print("[SyncManager.\(#function)] Error while loading image: \(error.localizedDescription)")
-                                    case .success(let image):
-                                        let path = image.save(with: String(url.lastPathComponent.split(separator: ".")[0]))
-                                        print("[SyncManager.\(#function)] Image saved to \(path ?? "NO PATH")")
+                                    case .success(let data):
+                                        DataManager.saveDataIntoDocuments(with: url.path, data: data)
+                                        print("[SyncManager.\(#function)] Data saved")
                                     }
                                 }
                             }
@@ -127,14 +127,16 @@ class SyncManager {
                             completion(error)
                         case .success(let urls):
                             for url in urls {
-                                UIImage.load(from: url) { result in
+
+                                DataManager.downloadData(from: url) { result in
                                     switch result {
                                     case .failure(let error):
-                                        print("[SyncManager.\(#function)] Error while loading image: \(error.localizedDescription)")
-                                    case .success(let image):
-                                        let path = image.save(with: String(url.lastPathComponent.split(separator: ".")[0]))
-                                        print("[SyncManager.\(#function)] Image saved to \(path ?? "NO PATH")")
+                                        print("[SyncManager.\(#function)] Error while loading data: \(error.localizedDescription)")
+                                    case .success(let data):
+                                        DataManager.saveDataIntoDocuments(with: url.pathComponents.suffix(3).joined(separator: "/"), data: data)
+                                        print("[SyncManager.\(#function)] Data saved")
                                     }
+
                                 }
                             }
                             print("[SyncManager.\(#function)] Successfully load attachments")

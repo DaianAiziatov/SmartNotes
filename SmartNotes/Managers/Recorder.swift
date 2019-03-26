@@ -24,7 +24,7 @@ class Recorder {
 
     func requestRecordPermission(completion: @escaping (Bool, Error?)-> ()) {
         do {
-            try recordingSession.setCategory(.record, mode: .default, options: .defaultToSpeaker)
+            try recordingSession.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
             try recordingSession.setActive(true, options: .notifyOthersOnDeactivation)
             recordingSession.requestRecordPermission() { allowed in
                 DispatchQueue.main.async {
@@ -56,7 +56,6 @@ class Recorder {
 
         do {
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
-            print("_____________CHECKPOINT_______________")
             audioRecorder?.delegate = delegate
             audioRecorder?.record()
 

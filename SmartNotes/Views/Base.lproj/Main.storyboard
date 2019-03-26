@@ -189,6 +189,7 @@
                         <outlet property="noteTextView" destination="BFf-UX-qbs" id="0Wi-wb-uAU"/>
                         <outlet property="recordButton" destination="B3B-cf-WjL" id="MdW-xj-rUV"/>
                         <outlet property="sketchButton" destination="Ggj-79-9Mp" id="CbM-CG-0GK"/>
+                        <segue destination="Gvv-h1-EjP" kind="show" identifier="showRecordings" id="ArQ-gu-ifM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fOq-z6-QDD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -369,6 +370,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fEX-08-ete" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3361" y="841"/>
+        </scene>
+        <!--Recordings Table View Controller-->
+        <scene sceneID="5Vy-lB-kWH">
+            <objects>
+                <tableViewController id="Gvv-h1-EjP" customClass="RecordingsTableViewController" customModule="SmartNotes" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ycq-sF-ygI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="separatorColor" red="0.90221613649999999" green="0.75405454640000003" blue="0.16206279400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recordingsCell" id="lOu-mF-0yf">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lOu-mF-0yf" id="U6Z-3B-gNN">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Gvv-h1-EjP" id="HQl-Uq-By1"/>
+                            <outlet property="delegate" destination="Gvv-h1-EjP" id="Bbw-XS-Xjb"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SJQ-Lz-q25" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3361" y="1557"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="PrY-Tw-yQH">

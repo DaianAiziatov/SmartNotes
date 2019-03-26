@@ -147,14 +147,16 @@ class FirebaseManager {
 
     func saveAttachments(for note: Note, completion: @escaping ([Error]) -> ()) {
         print("[FirebaseManager.\(#function)] Start saving attachments")
-        guard let user = user, let details = note.details else {
+        guard let user = user, let id = note.id else {
             print("[FirebaseManager.\(#function)] Failed to fetch user")
             var errors =  [Error]()
             errors.append(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil))
             completion(errors)
             return
         }
-        let urls = details.getLocalURLsOfAttachments()
+        let imageURLs = DataManager.getImagesURL(for: id)
+        let recordingsURLs = DataManager.getRecordingsURL(for: id)
+        let urls = imageURLs + recordingsURLs
         print("[FirebaseManager.\(#function)] Fetched \(urls.count) urls inside note")
         guard urls.count > 0 else {
             completion([Error]())
@@ -163,9 +165,10 @@ class FirebaseManager {
         let errors = Atomic<[Error]>([Error]())
         let count = Atomic<Int>(0)
         for url in urls {
-            let attachmentRef = storageRef.child(user.uid).child(url.path)
-            let fullURL = DataManager.localDoumentsDirectoryURL.appendingPathComponent(url.path)
-            attachmentRef.putFile(from: fullURL, metadata: nil) { metadata, error in
+            let localPath = url.pathComponents.suffix(3).joined(separator: "/")
+            print("[FirebaseManager.\(#function)] localPath: \(localPath)")
+            let attachmentRef = storageRef.child(user.uid).child(localPath)
+            attachmentRef.putFile(from: url, metadata: nil) { metadata, error in
                 count.mutate { $0 += 1 }
                 if let error = error {
                     errors.mutate { $0.append(error)}
@@ -178,11 +181,13 @@ class FirebaseManager {
     }
 
     func loadAttachmentsURL(for note: Note, completion: @escaping (Result<[URL], NSError>) -> ()) {
-        guard let user = user, let details = note.details else {
+        guard let user = user, let details = note.details, let recordings = note.recordings else {
             completion(Result.failure(NSError.init(domain: "[FirebaseManager.\(#function)] Failed to fetch user", code: 404, userInfo: nil)))
             return
         }
-        let urls = details.getLocalURLsOfAttachments()
+        let imagesURLs = details.getLocalURLsOfAttachments()
+        let recordingsURLs = recordings.compactMap({ URL(string: $0) })
+        let urls = imagesURLs + recordingsURLs
         let fetchedURLs = Atomic<[URL]>([URL]())
         let count = Atomic<Int>(0)
         for url in urls {
