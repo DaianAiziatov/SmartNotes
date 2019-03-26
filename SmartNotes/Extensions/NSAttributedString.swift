@@ -24,7 +24,7 @@ extension NSAttributedString {
 
     func replaceImagesWithTags(for noteId: String) -> String {
         var mutableSelf = NSMutableAttributedString(attributedString: self)
-        DataManager.clearFolderForNote(with: noteId)
+        DataManager.clearImagesFolderForNote(with: noteId)
         let countOfNSTextAttachment = self.countOfImagesInAttachment
         guard countOfNSTextAttachment > 0  else {
             return self.string

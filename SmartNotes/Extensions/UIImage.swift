@@ -16,14 +16,14 @@ extension UIImage {
         let noteID = String(name.split(separator: "_")[0])
         let fileManager = FileManager.default
         let localDoumentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let noteDirectoryURL = localDoumentsDirectoryURL.appendingPathComponent(noteID)
+        let imagesDirectoryURL = localDoumentsDirectoryURL.appendingPathComponent(noteID).appendingPathComponent("images")
         do {
-            if !fileManager.fileExists(atPath: noteDirectoryURL.path) {
-                try fileManager.createDirectory(atPath: noteDirectoryURL.path, withIntermediateDirectories: true, attributes: nil)
+            if !fileManager.fileExists(atPath: imagesDirectoryURL.path) {
+                try fileManager.createDirectory(atPath: imagesDirectoryURL.path, withIntermediateDirectories: true, attributes: nil)
             }
-            let imageUrl = noteDirectoryURL.appendingPathComponent(name).appendingPathExtension("png")
+            let imageUrl = imagesDirectoryURL.appendingPathComponent(name).appendingPathExtension("png")
             try self.pngData()?.write(to: imageUrl)
-            return "\(noteID)/\(name).png"
+            return "\(noteID)/images/\(name).png"
         } catch(let error) {
             print("[UIImage.\(#function)] Error while saving image: \(error.localizedDescription)")
             return nil
@@ -34,6 +34,7 @@ extension UIImage {
         let fileManager = FileManager.default
         let localDoumentsDirectoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let imageUrl = localDoumentsDirectoryURL.appendingPathComponent(imagePath)
+        print(imageUrl.path)
         if FileManager.default.fileExists(atPath: imageUrl.path),
             let imageData: Data = try? Data(contentsOf: imageUrl),
             let image: UIImage = UIImage(data: imageData, scale: UIScreen.main.scale) {

@@ -17,7 +17,8 @@ extension Note: DictionaryConvertible {
             "date"             : self.date?.timeIntervalSince1970 ?? 0.0,
             "details"          : self.details ?? "No details",
             "locationLatitude" : self.locationLatitude,
-            "locationLongitude": self.locationLongitude
+            "locationLongitude": self.locationLongitude,
+            "recordings"       : self.recordings ?? [String]()
         ]
     }
 
@@ -26,7 +27,8 @@ extension Note: DictionaryConvertible {
             let date = note["date"] as? TimeInterval,
             let details = note["details"] as? String,
             let locationLatitude = note["locationLatitude"] as? Double,
-            let locationLongitude = note["locationLongitude"] as? Double
+            let locationLongitude = note["locationLongitude"] as? Double,
+            let recordings = note["recordings"] as? [String]
         {
             if !DataManager.isExistNote(with: id) {
                 let newNote = Note(context: context)
@@ -35,6 +37,7 @@ extension Note: DictionaryConvertible {
                 newNote.details = details
                 newNote.locationLatitude = locationLatitude
                 newNote.locationLongitude = locationLongitude
+                newNote.recordings = recordings
                 return newNote
             } else {
                 return nil

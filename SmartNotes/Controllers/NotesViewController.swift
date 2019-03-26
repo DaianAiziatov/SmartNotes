@@ -159,7 +159,7 @@ extension NotesViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let confirm = UIAlertAction(title: "Confirm", style: .default, handler: ({ action in
+            let confirm = UIAlertAction(title: "Confirm", style: .default, handler: ({ [unowned self] action in
                 let note = self.notes[indexPath.row]
                 if let _ = FirebaseManager.shared.getUser() {
                     FirebaseManager.shared.deleteNote(with: note.id!) { error in
@@ -167,16 +167,21 @@ extension NotesViewController: UITableViewDataSource {
                             print("[\(#function)] Error while deleting note from cloud: \(error.localizedDescription)")
                         } else {
                             FirebaseManager.shared.deleteAttachments(for: note) { error in
+                                print("[\(#function)] Deleting attachments")
                                 if let error = error {
                                     print("[\(#function)] Error while deleting attachments for note from cloud: \(error.localizedDescription)")
                                 }
+                                DataManager.deleteFolderForNote(with: note.id!)
+                                context.delete(note)
+                                self.loadNotes()
                             }
                         }
                     }
+                } else {
+                    context.delete(note)
+                    DataManager.deleteFolderForNote(with: note.id!)
+                    self.loadNotes()
                 }
-                context.delete(note)
-                DataManager.deleteFolderForNote(with: note.id!)
-                self.loadNotes()
             }))
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             displayAlert(with: "Are you sure to delete this note?", message: "This action can't be undone", actions: [confirm, cancel])
