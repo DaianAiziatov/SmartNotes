@@ -10,7 +10,6 @@
 		2B3AB614223DBF6A00C3E430 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB613223DBF6A00C3E430 /* UIImage.swift */; };
 		2B3AB616223DC27C00C3E430 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB615223DC27C00C3E430 /* String.swift */; };
 		2B3AB636224053FF00C3E430 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB635224053FF00C3E430 /* NSAttributedString.swift */; };
-		2B3AB6562242D7CD00C3E430 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6552242D7CD00C3E430 /* Styles.swift */; };
 		2B3AB6582242DEF800C3E430 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3AB6572242DEF800C3E430 /* DataManager.swift */; };
 		2B3AB6672242EA6000C3E430 /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3AB65B2242EA5F00C3E430 /* FirebaseAuth.framework */; };
 		2B3AB6682242EA6000C3E430 /* FirebaseDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3AB65C2242EA5F00C3E430 /* FirebaseDatabase.framework */; };
@@ -65,7 +64,6 @@
 		2B3AB613223DBF6A00C3E430 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		2B3AB615223DC27C00C3E430 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2B3AB635224053FF00C3E430 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
-		2B3AB6552242D7CD00C3E430 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		2B3AB6572242DEF800C3E430 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		2B3AB65B2242EA5F00C3E430 /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Carthage/Build/iOS/FirebaseAuth.framework; sourceTree = "<group>"; };
 		2B3AB65C2242EA5F00C3E430 /* FirebaseDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseDatabase.framework; path = Carthage/Build/iOS/FirebaseDatabase.framework; sourceTree = "<group>"; };
@@ -276,7 +274,6 @@
 		2B955FEE223B06E1008BCB22 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				2B3AB6552242D7CD00C3E430 /* Styles.swift */,
 				2B955FC7223AB55C008BCB22 /* AppDelegate.swift */,
 				2B955FD1223AB560008BCB22 /* Assets.xcassets */,
 				2B955FD6223AB560008BCB22 /* Info.plist */,
@@ -407,7 +404,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B3AB6CA2245B85500C3E430 /* DrawViewController.swift in Sources */,
-				2B3AB6562242D7CD00C3E430 /* Styles.swift in Sources */,
 				2B3AB69C224344B500C3E430 /* UserProfileTableViewController.swift in Sources */,
 				2B3AB6582242DEF800C3E430 /* DataManager.swift in Sources */,
 				2B955FD0223AB55C008BCB22 /* SmartNotes.xcdatamodeld in Sources */,
